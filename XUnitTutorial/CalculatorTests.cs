@@ -34,5 +34,26 @@ namespace XUnitTutorial
             _sut.Add(secondToAdd);
             Assert.Equal(expected, _sut.Value);
         }
+
+        [Theory]
+        [MemberData(nameof(TestData))]
+        public void AddManyNumbersShouldEqualTheirEqualTheory(
+    decimal expected, params decimal[] valuesToAdd)
+        {
+            foreach (var value in valuesToAdd)
+            {
+                _sut.Add(value);
+            }
+            Assert.Equal(expected, _sut.Value);
+        }
+
+        public static IEnumerable<object[]> TestData()
+        {
+            yield return new object[] { 15, new decimal[] { 10, 5 } };
+            yield return new object[] { 15, new decimal[] { 1, 5, 9 } };
+            yield return new object[] { -5, new decimal[] { -10, 5 } };
+            yield return new object[] { 0, new decimal[] { -1, 1} };
+            yield return new object[] { 0, new decimal[] { 0, 0} };
+        }
     }
 }
